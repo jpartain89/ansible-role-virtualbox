@@ -1,0 +1,9 @@
+---
+
+virtualbox_apt_package: "virtualbox-5.2"
+virtualbox_apt_repository: "deb http://download.virtualbox.org/virtualbox/debian {{ ansible_distribution_release }} contrib"
+
+virtualbox_ext_version: '5.2.2'
+virtualbox_ext_version_long: '{{ virtualbox_ext_version }}-119230'
+
+virtualbox_ext_pack: "http://download.virtualbox.org/virtualbox/{{ virtualbox_ext_version }}/Oracle_VM_VirtualBox_Extension_Pack-{{ virtualbox_ext_version_long }}.vbox-extpack"

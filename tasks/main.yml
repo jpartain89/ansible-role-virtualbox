@@ -1,1 +1,37 @@
 ---
+
+- name: Add Key for the Repository of VirtualBox
+  apt_key:
+    url: 'https://www.virtualbox.org/download/oracle_vbox_2016.asc'
+  become: yes
+
+- name: Add the Repository of VirtualBox
+  apt_repository:
+    repo: "{{ virtualbox_apt_repository }}"
+    update_cache: yes
+  become: yes
+
+- name: Install VirtualBox
+  apt:
+    name: "{{ item }}"
+    update_cache: yes
+    cache_valid_time: 3600
+    install_recommends: no
+  become: yes
+  with_items:
+    - "{{ virtualbox_apt_package }}"
+    - "linux-headers-{{ ansible_kernel }}"
+    - "build-essential"
+    - dkms
+
+- name: Download VirtualBox Extension Pack
+  get_url:
+    url: "{{ virtualbox_ext_pack }}"
+    dest: "/tmp/Oracle_VM_VirtualBox_Extension_Pack-{{ virtualbox_ext_version_long }}.vbox-extpack"
+  register: _ext_download
+
+- debug: var=_ext_download
+
+- name: Install VirtualBox Extension
+  shell: "VBoxManage extpack install {{ _ext_download.dest }}"
+  become: true
