@@ -33,5 +33,5 @@
 - debug: var=_ext_download
 
 - name: Install VirtualBox Extension
-  shell: "VBoxManage extpack install {{ _ext_download.dest }}"
+  shell: "VBoxManage extpack install {{ _ext_download.dest }} -y"
   become: true
